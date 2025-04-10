@@ -29,35 +29,35 @@
     /* //loading Activity starting page code */
     .intro{
         width: 60%;
-        height: 200px;
+        height: 320px;
         font-size: 20px;
         color: black;
-        background-color:white;
+        /* background-color:white; */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border-top-right-radius: 30px;
         border-bottom-left-radius: 30px;
+        overflow: hidden;
     }
     #intro_btn01{
-        width: 30%;
-        height: 7%;
+        width: 20%;
+        height: 50px;
         border: none;
         border-radius: 100px;
         color: white;
         font-size: 18px;
         background-color: black;
+        margin-bottom: 100px;
     }
     .lottie-box{
-        width: 60%;
+        width: 51%;
         height: 150px;
         /* background-color: red; */
 
     }
-    #animation01{
-        background-color: red;
-    }
+    
 
     /* //home Activity code */
     .main {
@@ -100,7 +100,7 @@
         height: 60%;
         color: white;
         text-shadow: 1px 1px 5px black;
-        /* background-color: yellow; */ 
+        /* background-color: yellow;  */
         /* /* display: flex;
         justify-content: center;
         align-items: center; */
@@ -192,6 +192,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    
     }
 
     #duration {
@@ -208,10 +209,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 20px;
+        /* background-color: red; */
     }
 
     #btn-study-start {
-        width: 80%;
+        width: 30%;
         height: 50%;
         border: none;
         border-radius: 100px;
@@ -240,15 +243,33 @@
     #author{
         display: flex;
         justify-content: end;
-        padding-right: 20%;
+        padding-right: 5%;
     }
+    pre {
+        width: 80%;
+        height: 100%;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      padding: 20px;
+      border-radius: 8px;
+      /* overflow-x: auto; */
+      font-size: 16px;
+      line-height: 1.5;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .keyword { color: #569cd6; }
+    .string  { color: #ce9178; }
+    .key     { color: #9cdcfe; }
+    .value   { color: #ce9178; }
+    .function { color: #dcdcaa; }
+    .comment { color: #6a9955; font-style: italic; }
 
 
     
 </style>
 
 <body id="bb">
-    <h3 style="color: white; font-weight: 900; text-shadow: 1px 1px 7px black;">Quote of the day:</h3>
 
 </body>
  <script>
@@ -265,9 +286,20 @@
                 loop autoplay></dotlottie-player>
             </div>
             <div class="intro">
-                <h3>The <span style="color: red;">magic</span> you are <span style="color: purple;">looking</span> for is in the <span style="color: red;">work</span> you are <span style="color: peru;">avoiding</span>.</h3>
+                 <pre><code>
+<span class="keyword">const</span> View = {
+  <span class="key">Quote</span>: <span class="string">"The magic you are looking for is in the work you are avoiding."</span>,
+  <span class="key">Author</span>: <span class="string">"Sharwan jung kunwar"</span>,
+  <span class="key">Home</span>: <span class="string">function()</span>,
+  <span class="key">compony</span>: <span class="string">"Unpredictable coders"</span>,
+  <span class="key">codeBase</span>: <span class="string">"html, css, javaScript"</span>,
+  <span class="key">host</span>: <span class="string">"https://sharwankunwar.github.io/StopWatch/"</span>
+};
+
+<span class="function">console</span>.log(View.<span class="key">Home</span>);
+  </code></pre>
             </div>
-            <button id="intro_btn01">Let's get started</button>
+            <button id="intro_btn01">CTRL + ALT + N</button>
         `;
 
         // HTML structure for the home page
@@ -288,10 +320,11 @@
                 <br>
                 <p id="quote">Learning never exhausts the mind.</p>
                 <br>
-                <span id="author" style="color: purple; font-weight: 300; text-shadow: 1px 1px 2px black;">asdfsd</span>
+                <span id="author" style="color: purple; font-weight: 300; text-shadow: 1px 1px 2px black;"></span>
             </section>
             <section id="home-bottom-btn">
                 <button id="study-btn">Study with me</button>
+                
             </section>
         `;
         
@@ -301,11 +334,12 @@
             <input id="duration" type="number" placeholder="30" min="1">
         </div>
         <section id="study-btns">
-            <button id="btn-study-start">Start Deep Focused Environment</button>
+            <button class="bt" id="btn-study-start">Start</button>
         </section>
         <section id="countdown-section" style="display:none;">
             <div id="countdown">00:00</div>
         </section>
+
     </div>`;
         // Function to update time every second
         function updateTime() {
@@ -315,12 +349,12 @@
         }
 
         // Reusable text effect function
-    function textEffect(element, time) {
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@!#$%^&*()_+-";
+    function textEffect(element, time,after) {
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         let interval = null;
 
         const originalText = element.textContent;
-        let iteration = 0;
+        let iteration = after;
 
         clearInterval(interval);
 
@@ -374,7 +408,8 @@
                     if(data.content.length <= 200){
                         document.getElementById("quote").textContent = data.content;
                         document.getElementById("author").textContent = `Author: ${data.author}`;
-                        textEffect(quote,30);
+                        textEffect(quote,30,0);
+                        textEffect(author,30,7);
                     }else{
                         document.getElementById("quote").textContent = "One success can fix 100 regrets.";
                         document.getElementById("author").textContent = `Author: Sharwan jung kunwar`;
@@ -440,7 +475,7 @@
             
 
 
-            if (timeRemaining <= 50) {
+            if (timeRemaining <= 0) {
                 clearInterval(countdownTimer);
                 alert("Time's up! You've completed your focus session.");
                 location.reload();
